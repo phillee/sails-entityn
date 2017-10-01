@@ -1,0 +1,24 @@
+mixin editField(obj, field)
+  .row
+    .col-sm-12
+      .form-group
+        label
+          = field.label || field.name
+          if field.desc
+            br
+            small(style='font-weight: normal')= field.desc
+
+        if field.type == 'text'
+          input.form-control(type='text', placeholder=field.placeholder, name=field.name, value=obj[field.name])
+
+        if field.type == 'select'
+          select.form-control.selectize(
+            name=field.name
+            placeholder=field.placeholder)
+            option(value='')= field.placeholder
+            each option in field.selectOptions.call(obj)
+              option(value=option selected=(option == obj[field.name]))= option
+
+mixin modelForm(model)
+  each field in entityInfo.fields
+    +editField(model, field)

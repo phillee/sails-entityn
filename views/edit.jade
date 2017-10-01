@@ -1,0 +1,29 @@
+extends layout
+
+include model_edit
+
+block content
+  .container
+    .row
+      .col-md-12
+        ol.breadcrumb
+          li
+            a(href='/admin') Admin
+          li
+            a(href='/admin/browse/' + entityInfo.name)
+              = entityInfo.pluralDisplay
+          li.active Edit
+
+    .row
+      .col-md-12
+        .box
+          .box-header.with-border
+            h3.box-title Edit #{entityInfo.singularDisplay}
+          form#companyForm(method='post', action='/admin/browse/' + entityInfo.name + '/' + result.id, autocomplete='off', role='form')
+            .box-body
+              +modelForm(result)
+
+            .box-footer.clearfix
+              button.btn.btn-primary.btn-lg(type='submit') Submit
+
+

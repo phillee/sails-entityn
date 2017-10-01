@@ -1,0 +1,18 @@
+{
+  "name": "sails-entityn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Philip Lee",
+  "license": "ISC",
+  "sails": {
+    "isHook": true
+  },
+  "dependencies": {
+    "sugar": "^2.0.4",
+    "sugar-inflections": "^2.0.4"
+  }
+}

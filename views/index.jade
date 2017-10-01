@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  .container
+    .row
+      .col-md-12
+        .box
+          .box-header.with-border
+            h3.box-title #{entityInfo.pluralDisplay} List
+          .box-body.with-border
+            a.btn.btn-app(href='/admin/browse/' + entityInfo.name + '/new')
+              i.fa.fa-plus
+              |  Add
+          .box-body.no-padding
+            table.table.table-striped
+              thead
+                tr
+                  th(width=70)
+                  each field in entityInfo.fields
+                    if field.adminList
+                      th= field.label
+
+              tbody
+                each model, index in results
+                  tr
+                    td.td-actions
+                      .btn-group.btn-group-xs
+                        a.btn.btn-info-o.action-edit(
+                          data-toggle='tooltip',
+                          data-placement='bottom',
+                          title='Edit ' + entityInfo.singluarDisplay
+                          href='/admin/browse/' + entityInfo.name + '/' + model.id
+                          )
+                          | Edit
+                        a.btn.btn-danger-o.action-delete(
+                          href='javascript:void(0);',
+                          data-id=model.id,
+                          data-toggle='tooltip',
+                          data-placement='bottom',
+                          title='Double Click to Delete'
+                          )
+                          i.fa(class='fa-trash-o')
+
+                    each field in entityInfo.fields
+                      if field.adminList
+                        td
+                          if field.type == 'text'
+                            = model[field.name]
+                          else if field.type == 'select'
+                            = model[field.name]
