@@ -11,6 +11,6 @@ module.exports = {
   'GET /admin/browse/:modelName': controller.index,
   'GET /admin/browse/:modelName/new': controller.new,
   'GET /admin/browse/:modelName/:id': controller.edit,
-  'POST /admin/browse': controller.create,
+  'POST /admin/browse/:modelName': controller.create,
   'POST /admin/browse/:modelName/:id': controller.update
 }

@@ -9,14 +9,14 @@ include model_edit
         li
           a(href='/admin/browse/' + entityInfo.name)
             = entityInfo.pluralDisplay
-        li.active Edit
+        li.active Create
 
   .row
     .col-md-12
       .box
         .box-header.with-border
-          h3.box-title Edit #{entityInfo.singularDisplay}
-        form#companyForm(method='post', action='/admin/browse/' + entityInfo.name + '/' + result.id, autocomplete='off', role='form')
+          h3.box-title Create #{entityInfo.singularDisplay}
+        form#companyForm(method='post', action='/admin/browse/' + entityInfo.name, autocomplete='off', role='form')
           .box-body
             +modelForm(result)
 

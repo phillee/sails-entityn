@@ -1,6 +1,16 @@
 const VIEW_PATH = '../api/hooks/entityn/views/'
+const path = require('path')
 
-function buildPath(p) { return VIEW_PATH + p }
+function absViewPath(p) { return __dirname + '/views/' + p }
+
+function renderContent(view, res, locals) {
+  if (!locals) locals = res.locals
+
+  var relativeViewPath = path.relative(sails.config.paths.views, absViewPath(view))
+  sails.renderView(relativeViewPath, locals, (err, html) => {
+    res.content(html)
+  })
+}
 
 exports.authenticate = (req, res, next) => {
   next()
@@ -17,29 +27,32 @@ exports.index = (req, res) => {
   .find()
   .exec((err, results) => {
     res.locals.results = results
-    res.view(buildPath('index'))
+    renderContent('index', res)
   })
 }
 
 exports.new = (req, res) => {
-  res.render(buildPath('edit'))
+  res.locals.result = new res.locals.model._model({})
+  renderContent('new', res)
 }
 
 exports.edit = (req, res) => {
   res.locals.model
   .findOneById(req.params.id)
   .exec((err, result) => {
-    res.render(buildPath('edit'), { result: result })
+    res.locals.result = result
+    renderContent('edit', res)
   })
 }
 
 exports.create = (req, res) => {
-  var modelObj = new res.locals.model()
+  var modelObj = new res.locals.model._model({})
 
   res.locals.entityInfo.setValues(modelObj, req.body)
 
-  modelObj.save((err) => {
-    res.redirect('/admin/browse/' + model.modelInfo.name)
+  modelObj.create((err) => {
+    console.log(err)
+    res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)
   })
 }
 
@@ -50,7 +63,6 @@ exports.update = (req, res) => {
     res.locals.entityInfo.setValues(modelObj, req.body)
 
     modelObj.save((err) => {
-      console.log('save err?', err)
       res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)
     })
   })
