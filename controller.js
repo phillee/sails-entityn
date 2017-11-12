@@ -46,13 +46,15 @@ exports.edit = (req, res) => {
 }
 
 exports.create = (req, res) => {
-  var modelObj = new res.locals.model._model({})
-
-  res.locals.entityInfo.setValues(modelObj, req.body)
-
-  modelObj.create((err) => {
+  console.log('creating', req.body)
+  res.locals.model.create({}, (err, modelObj) => {
     console.log(err)
-    res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)
+    res.locals.entityInfo.setValues(modelObj, req.body);
+
+    modelObj.save((err) => {
+      console.log(err)
+      res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)
+    })
   })
 }
 
