@@ -1,0 +1,25 @@
+.container
+  .row
+    .col-md-12
+      ol.breadcrumb
+        li
+          a(href='/admin') Admin
+        li
+          a(href='/admin/browse/' + entityInfo.name)
+            = entityInfo.pluralDisplay
+        li.active Confirm Delete
+
+  .row
+    .col-md-12
+      .box
+        .box-header.with-border
+          h3.box-title
+            | Are you sure you want to delete #{entityInfo.singularDisplay} with ID #{result.id}?
+
+        form#companyForm(method='post', action='/admin/browse/' + entityInfo.name + '/' + result.id + '/delete', autocomplete='off', role='form')
+
+          .box-footer.clearfix
+            button.btn.btn-danger.btn-lg(type='submit') Delete
+            a.btn.btn-default.btn-lg.ml-10(href='/admin/browse/' + entityInfo.name) Cancel
+
+
