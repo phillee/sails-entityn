@@ -7,7 +7,7 @@ module.exports = function(name, fields) {
   var pointer = this
 
   this.name = name
-  this.singluarDisplay = Sugar.String.capitalize(name)
+  this.singularDisplay = Sugar.String.capitalize(name)
   this.pluralDisplay = Sugar.String.capitalize(Sugar.String.pluralize(name))
   this.fields = []
 

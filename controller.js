@@ -45,21 +45,36 @@ exports.edit = (req, res) => {
   })
 }
 
+exports.confirmDelete = (req, res) => {
+  res.locals.model
+  .findOneById(req.params.id)
+  .exec((err, result) => {
+    res.locals.result = result
+    renderContent('confirm_delete', res)
+  })
+}
+
+exports.delete = async function(req, res) {
+  res.locals.model.destroy({id : req.params.id}, err => {
+    res.redirect('/admin/browse/' + res.locals.entityInfo.name)
+  })
+}
+
 exports.create = (req, res) => {
-  console.log('creating', req.body)
   res.locals.model.create({}, (err, modelObj) => {
-    console.log(err)
-    res.locals.entityInfo.setValues(modelObj, req.body);
+    res.locals.entityInfo.setValues(modelObj, req.body)
 
     modelObj.save((err) => {
-      console.log(err)
-      res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)
+      if (req.body.create_another === '1') {
+        res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/new')
+      } else {
+        res.redirect('/admin/browse/' + res.locals.entityInfo.name)
+      }
     })
   })
 }
 
 exports.update = (req, res) => {
-  console.log('body', req.body)
   res.locals.model
   .findOneById(req.params.id, (err, modelObj) => {
     res.locals.entityInfo.setValues(modelObj, req.body)

@@ -30,11 +30,11 @@
                         )
                         | Edit
                       a.btn.btn-danger-o.action-delete(
-                        href='javascript:void(0);',
+                        href='/admin/browse/' + entityInfo.name + '/' + model.id + '/confirmDelete'
                         data-id=model.id,
                         data-toggle='tooltip',
                         data-placement='bottom',
-                        title='Double Click to Delete'
+                        title='Delete'
                         )
                         i.fa(class='fa-trash-o')
 
