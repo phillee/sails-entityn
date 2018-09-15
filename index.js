@@ -23,15 +23,20 @@ function extractEntityInfo(models, done) {
     var model = models[modelName];
     var fields = {};
 
-    if (!model.entities) continue;
+    if (!(model.entities || model.entityN)) continue;
 
-    var entityInfo = new EntityInfo(modelName)
+    var entities = model.entities || model.entityN.entities;
+    var entityInfo = new EntityInfo(modelName, model.entityN);
 
-    for (var field in model.entities) {
-      entityInfo.configField(field, model.entities[field])
+    if (entities) {
+      for (var field in entities) {
+        entityInfo.configField(field, entities[field]);
+      }
     }
 
-    model.entityInfo = entityInfo
+    console.log(modelName, model.entityN, entityInfo);
+
+    model.entityInfo = entityInfo;
   }
 
   done()

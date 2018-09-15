@@ -14,7 +14,10 @@
       .box
         .box-header.with-border
           h3.box-title
-            | Are you sure you want to delete #{entityInfo.singularDisplay} with ID #{result.id}?
+            | Are you sure you want to delete #{entityInfo.singularDisplay}:
+
+          .alert.alert-info
+            | #{entityName}
 
         form#companyForm(method='post', action='/admin/browse/' + entityInfo.name + '/' + result.id + '/delete', autocomplete='off', role='form')
 

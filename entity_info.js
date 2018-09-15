@@ -3,15 +3,17 @@ require('sugar-inflections')
 
 // const cloudinary = require('./cloudinary')
 
-module.exports = function(name, fields) {
-  var pointer = this
+module.exports = function(name, options = {}) {
+  var pointer = {}
 
-  this.name = name
-  this.singularDisplay = Sugar.String.capitalize(name)
-  this.pluralDisplay = Sugar.String.capitalize(Sugar.String.pluralize(name))
-  this.fields = []
+  this.name = name;
+  this.singularDisplay = Sugar.String.capitalize(name);
+  this.pluralDisplay = Sugar.String.capitalize(Sugar.String.pluralize(name));
+  this.fields = [];
 
-  pointer.configField = function(fieldName, entityData) {
+  Object.assign(this, options);
+
+  this.configField = function(fieldName, entityData) {
     var fieldData = {
       label: entityData.label || Sugar.String.titleize(fieldName),
       name: fieldName,
@@ -21,10 +23,10 @@ module.exports = function(name, fields) {
 
     _.extend(fieldData, entityData)
 
-    pointer.fields.push(fieldData)
+    this.fields.push(fieldData)
   }
 
-  pointer.setValues = function(obj, input) {
+  this.setValues = function(obj, input) {
     pointer.fields.forEach((field) => {
       if (field.type == 'text' || field.type == 'select') {
         if (input[field.name]) obj[field.name] = input[field.name]

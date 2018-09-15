@@ -45,13 +45,15 @@ exports.edit = (req, res) => {
   })
 }
 
-exports.confirmDelete = (req, res) => {
-  res.locals.model
-  .findOneById(req.params.id)
-  .exec((err, result) => {
-    res.locals.result = result
-    renderContent('confirm_delete', res)
-  })
+exports.confirmDelete = async (req, res) => {
+  let result = await res.locals.model.findOneById(req.params.id);
+
+  res.locals.entityName = res.locals.entityInfo.displayName
+    ? await res.locals.entityInfo.displayName(result)
+    : `${res.locals.entityInfo.singularDisplay} with ID ${result.id}`
+
+  res.locals.result = result
+  renderContent('confirm_delete', res);
 }
 
 exports.delete = async function(req, res) {
