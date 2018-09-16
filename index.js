@@ -1,5 +1,4 @@
-const EntityInfo = require('./entity_info')
-// const anchor = require('anchor')
+const EntityInfo = require('./entity_info')\
 
 module.exports = function(sails) {
   var hook = this
@@ -7,8 +6,6 @@ module.exports = function(sails) {
   return {
     initialize: function(done) {
       sails.on('hook:orm:loaded', () => {
-        // anchor.define({ $entity: () => true })
-
         extractEntityInfo(sails.models, done)
       })
     },
@@ -19,6 +16,7 @@ module.exports = function(sails) {
 }
 
 function extractEntityInfo(models, done) {
+  console.log('extractEntityInfo');
   for (var modelName in models) {
     var model = models[modelName];
     var fields = {};
