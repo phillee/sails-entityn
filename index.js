@@ -1,4 +1,4 @@
-const EntityInfo = require('./entity_info')\
+const EntityInfo = require('./entity_info');
 
 module.exports = function(sails) {
   var hook = this
