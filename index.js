@@ -16,7 +16,6 @@ module.exports = function(sails) {
 }
 
 function extractEntityInfo(models, done) {
-  console.log('extractEntityInfo');
   for (var modelName in models) {
     var model = models[modelName];
     var fields = {};
@@ -31,8 +30,6 @@ function extractEntityInfo(models, done) {
         entityInfo.configField(field, entities[field]);
       }
     }
-
-    console.log(modelName, model.entityN, entityInfo);
 
     model.entityInfo = entityInfo;
   }
