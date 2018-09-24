@@ -27,7 +27,7 @@ module.exports = function(name, options = {}) {
   }
 
   this.setValues = function(obj, input) {
-    pointer.fields.forEach((field) => {
+    this.fields.forEach((field) => {
       if (field.type == 'text' || field.type == 'select') {
         if (input[field.name]) obj[field.name] = input[field.name]
       } else if (field.type == 'cloudinary') {
