@@ -2,22 +2,37 @@ mixin editField(obj, field)
   .row
     .col-sm-12
       .form-group
-        label
+        label(for=field.name)
           = field.label || field.name
           if field.desc
             br
             small(style='font-weight: normal')= field.desc
 
         if field.type == 'text'
-          input.form-control(type='text', placeholder=field.placeholder, name=field.name, value=obj[field.name])
+          input.form-control(
+            type='text',
+            placeholder=field.placeholder,
+            name=field.name,
+            value=obj[field.name],
+          )
 
         if field.type == 'select'
           select.form-control.selectize(
-            name=field.name
-            placeholder=field.placeholder)
+            name=field.name,
+            placeholder=field.placeholder,
+          )
             option(value='')= field.placeholder
             each option in field.selectOptions.call(obj)
               option(value=option selected=(option == obj[field.name]))= option
+
+        if field.type == 'boolean'
+          input(
+            id=field.name
+            type='checkbox',
+            name=field.name,
+            checked=obj[field.name],
+            style='margin-left: 5px'
+          )
 
 mixin modelForm(model)
   each field in entityInfo.fields

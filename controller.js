@@ -79,7 +79,18 @@ exports.create = (req, res) => {
 exports.update = (req, res) => {
   res.locals.model
   .findOneById(req.params.id, (err, modelObj) => {
-    res.locals.entityInfo.setValues(modelObj, req.body)
+    var modelData = Object.assign({}, req.body);
+
+    // handle booleans/checkboxes
+    var checkboxes =
+      res.locals.entityInfo.fields
+      .filter(field => field.type == 'boolean');
+
+    checkboxes.forEach(checkbox => {
+      modelData[checkbox.name] = req.body[checkbox.name] == 'on';
+    });
+
+    res.locals.entityInfo.setValues(modelObj, modelData);
 
     modelObj.save((err) => {
       res.redirect('/admin/browse/' + res.locals.entityInfo.name + '/' + modelObj.id)

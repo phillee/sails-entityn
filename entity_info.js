@@ -28,8 +28,11 @@ module.exports = function(name, options = {}) {
 
   this.setValues = function(obj, input) {
     this.fields.forEach((field) => {
-      if (field.type == 'text' || field.type == 'select') {
-        if (input[field.name]) obj[field.name] = input[field.name]
+      if (field.type == 'text'
+        || field.type == 'select'
+        || field.type == 'boolean'
+      ) {
+        if (input[field.name] != undefined) obj[field.name] = input[field.name]
       } else if (field.type == 'cloudinary') {
         // var identifierField = field.name + '_cloudinaryIdentifier'
         // var identifierValue = input[identifierField]
