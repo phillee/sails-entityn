@@ -1,10 +1,8 @@
-const EntityInfo = require('./entity_info');
+const EntityInfo = require('./entity_info')
 
-module.exports = function(sails) {
-  var hook = this
-
+module.exports = function (sails) {
   return {
-    initialize: function(done) {
+    initialize: function (done) {
       sails.on('hook:orm:loaded', () => {
         extractEntityInfo(sails.models, done)
       })
@@ -15,23 +13,22 @@ module.exports = function(sails) {
   }
 }
 
-function extractEntityInfo(models, done) {
+function extractEntityInfo (models, done) {
   for (var modelName in models) {
-    var model = models[modelName];
-    var fields = {};
+    var model = models[modelName]
 
-    if (!(model.entities || model.entityN)) continue;
+    if (!(model.entities || model.entityN)) continue
 
-    var entities = model.entities || model.entityN.entities;
-    var entityInfo = new EntityInfo(modelName, model.entityN);
+    var entities = model.entities || model.entityN.entities
+    var entityInfo = new EntityInfo(modelName, model.entityN)
 
     if (entities) {
       for (var field in entities) {
-        entityInfo.configField(field, entities[field]);
+        entityInfo.configField(field, entities[field])
       }
     }
 
-    model.entityInfo = entityInfo;
+    model.entityInfo = entityInfo
   }
 
   done()
