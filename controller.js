@@ -33,6 +33,9 @@ exports.index = (req, res) => {
       if (err) {
         console.log(err)
       }
+      results.forEach(m => {
+        res.locals.entityInfo.interpolateLink(m)
+      })
       res.locals.results = results
       renderContent('index', res)
     })

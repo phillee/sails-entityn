@@ -42,6 +42,10 @@
                     if field.adminList
                       td
                         if field.type == 'text'
-                          = model[field.name]
+                          if field.link
+                            a(href=model._link target=field.link.target)
+                              = model[field.name]
+                          else
+                            = model[field.name]
                         else if field.type == 'select'
                           = model[field.name]

@@ -1,5 +1,6 @@
 /* global _ */
 const Sugar = require('sugar')
+const UrlPattern = require('url-pattern')
 require('sugar-inflections')
 
 // const cloudinary = require('./cloudinary')
@@ -21,7 +22,6 @@ module.exports = function (name, options = {}) {
     }
 
     _.extend(fieldData, entityData)
-
     this.fields.push(fieldData)
   }
 
@@ -41,6 +41,15 @@ module.exports = function (name, options = {}) {
         // var preloadedFile = new cloudinary.PreloadedFile(identifierValue)
         // if (preloadedFile.is_valid()) obj[field.name] = preloadedFile.identifier()
         // else console.log('invalid sig')
+      }
+    })
+  }
+
+  this.interpolateLink = function (obj) {
+    this.fields.forEach(f => {
+      if (f.link) {
+        const pattern = new UrlPattern(f.link.url)
+        obj._link = pattern.stringify(obj)
       }
     })
   }
