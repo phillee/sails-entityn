@@ -23,18 +23,11 @@
                   td.td-actions
                     .btn-group.btn-group-xs
                       a.btn.btn-info-o.action-edit(
-                        data-toggle='tooltip',
-                        data-placement='bottom',
-                        title='Edit ' + entityInfo.singluarDisplay
                         href='/admin/browse/' + entityInfo.name + '/' + model.id
                         )
                         | Edit
                       a.btn.btn-danger-o.action-delete(
                         href='/admin/browse/' + entityInfo.name + '/' + model.id + '/confirmDelete'
-                        data-id=model.id,
-                        data-toggle='tooltip',
-                        data-placement='bottom',
-                        title='Delete'
                         )
                         i.fa(class='fa-trash-o')
 
